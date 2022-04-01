@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>USICT Teacher Login</title>
+        <link rel="stylesheet" href="Teacher-Login-style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+
+    <body>
+        
+    <div id="navbar1">
+        <img src="../images/logo.jpg" alt="" class="logo">
+        <br>
+        <h1 class="collegeName">University School of Information, Communication & Technology</h1>
+        <a href="../main/index.html" class="Home">Home </a>
+    </div>
+
+    <div class="teacher" id="teacher">
+
+        <div class="teacher-login-form">
+            <div >
+                <form action="/teacher_login" method="post" id="login-form">
+                    <label for="user id">Teacher Id</label>
+                    <input type="email" placeholder="example@ipu.com" name="login_ID" required>
+                    <label for="password">Password</label>
+                    <input type="password" name="Password" id="password" required> 
+                    Show Password<input type="checkbox" id="checkbox1" onclick="checkbox()">
+                    <button type="submit" class="submit" id="submit">Login</button>
+                </form>
+               
+                    
+                
+       
+            </div>
+    
+        </div>
+
+    </div>
+      
+    <div class="footer">
+        <a href="#" class="fa fa-facebook"></a>
+        <a href="#" class="fa fa-twitter"></a>
+        <a href="#" class="fa fa-google"></a>
+        <a href="#" class="fa fa-linkedin"></a>
+        <a href="#" class="fa fa-youtube"></a>
+        <a href="#" class="fa fa-instagram"></a>
+        <a href="#" class="fa fa-telegram"></a>
+        <hr>
+        <p>Copyright &copy; SS GROUP 2021</p>
+    </div>
+
+
+    <script src="./teacher_login.js"></script>
+    
+    </body>
+</html>

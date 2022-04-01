@@ -1,0 +1,1047 @@
+body
+{
+    margin: 0;;
+}
+
+ul{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+#nav-bar
+{
+    width: 100%;
+    position: fixed;
+    height: 80px;
+    background-color: #1B262C;
+    display: flex;
+}
+
+.logo
+{
+    width: 85px;
+    height: 75px;
+    margin-left: 2%;
+    margin-top: 3px;
+    margin-right: 1%;
+   
+}
+
+h1.collegeName
+{
+    
+    color: white;
+    font-size: 25px;
+ 
+}
+
+#teacher_basic_info
+{
+    margin-left: 15%;
+    position: absolute;
+    right: 110px;
+    color: white ;
+}
+
+#teacher_img
+{
+    position: absolute;
+    height: 65px;
+    width: 65px;
+    right: 20px;
+    top: 5px;
+    border-radius: 100%;
+    border: 3px solid white;
+}
+
+.temp
+{
+    cursor: pointer;
+}
+.temp:hover
+{
+    background-color: #002E4D;
+    color: white;
+}
+
+#main
+{
+    display: flex;
+}
+
+#side-bar
+{
+    width: 12%;
+    position: fixed;
+    margin-top: 80px;
+    margin-left: 0;
+    margin-bottom: 30px;
+    background-color: #E8F1F5;
+}
+
+#content
+{
+    width: 88%;
+    margin-left: 12%;
+    margin-top: 80px;
+    position: fixed;
+    margin-bottom: 30px;
+    
+}
+
+#side-bar-div
+{
+    overflow-y: auto;
+    position: fixed;
+    top: 80px;
+    overflow-x: hidden;
+    width: 12%;
+    bottom: 30px;
+ 
+}
+
+#side-bar-ul{
+    padding: 2px;
+    padding-left: 0;
+    margin-top: 0px;
+    
+}
+
+.side-bar-li{
+    border-bottom: 2px solid white;
+    color: white;
+    background-color: #005691;
+    width: 100%;
+    padding: 10%;
+    cursor:pointer;
+}
+
+ .my_profile .allocated-classes
+{
+    background-color: #E8F1F5;
+}
+
+
+
+.side-bar-li-li{
+    border-bottom: 2px solid #005691;
+    color: #1B262C;
+    width: 100%;
+    padding: 10%;
+    font-weight: 500;
+    cursor:pointer;
+}
+
+#my_Profile, #allocated-classes
+{
+    display: none;
+}
+
+.darrow
+{
+    width: 10px;
+    padding-bottom: 2px;
+}
+
+
+
+
+#content-div
+{
+    overflow-y: auto;
+    position: fixed;
+    top: 80px;
+    overflow-x: hidden;
+    width: 86%;
+    bottom: 30px;
+    padding-left: 2%;
+    padding-top: 0;
+    border-left: 2px solid rgba(0, 0, 0, 0.4);
+    
+}
+
+
+/* Teacher time table */
+
+
+
+#my-time-table td{
+    text-align: center;
+    padding: 0.7%;
+    width: 90px;
+    border-radius: 10px;
+    background-color:#80E8DD;
+}
+
+#my-time-table th{
+    width: 102px;
+    text-align: center;
+    padding: 0.7%;
+    border-radius: 10px;
+}
+
+.weekday
+{
+    background-color: #84DFFF;
+}
+
+.table-time
+{
+    background-color: #FFFCDC; 
+}
+
+#time-table-heading, #class-name , .class-name{
+    background-color: #002e4d;
+    color: whitesmoke;
+    display: inline-block;
+    margin: 0 auto;
+    padding: 10px;
+    padding-top: 20px;
+    border-radius: 0 0 10px 10px;
+}
+#class-name,.class-name
+{
+    margin-bottom: 20px ;
+}
+
+#colorPalette{
+    display: flex;
+    list-style: none;
+    justify-content: right;
+    /* margin-right: 13%; */
+    margin: 0 13% 3% auto;
+}
+
+#colorPalette li{
+    padding: 1%;
+    margin: 0 1%;
+    border-radius: 10px;
+    
+}
+
+.checkclass
+{
+    font-size: smaller;
+    font-weight: bold;
+}
+.no-classColor{
+    background-color: #80E8DD;
+}
+
+.lunch-timeColor{
+    background-color: #B7F6AF;
+}
+
+.todayColor{
+    background-color: #105652;
+    color: white;
+}
+
+.on-goingColor{
+    background-color: #F6F631;
+}
+
+.next-classColor{
+    background-color: #F8485E;
+}
+
+#join-button
+{
+    margin-top: 2%;
+    text-align: center;
+    padding: 1%;
+    border-radius: 10px;
+    border: 2px solid rgb(102, 103, 104);
+    background-color: #F6F631;
+    display: none;
+}
+
+#join-button a{
+    text-decoration: none;
+    color: black;
+    font-weight: 900;
+}
+
+#join-button:hover{
+    background-color: #EC5858;
+}
+
+
+/* Classes */
+
+
+#class-home-page
+{
+    margin: 2% 0;
+
+    padding: 1%;
+    justify-content: center;
+}
+
+.class-info
+{
+    margin: 2% 2%;
+    margin-top: 0;
+    width: 20%;
+    height: 200px;
+    display: flex;
+    float: left;
+    padding: 2%;
+    border: 2px solid #002E4D;
+    border-radius: 10px;
+    background-repeat: no-repeat;
+    background-size: 100% 250px;
+}
+
+#class-students
+{
+    text-align: center;
+    background-image: url("../images/student-class-background.webp");
+}
+
+#class-students h1{
+    margin-top: 24%;
+    font-weight: 700;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color:#0057914f;
+}
+
+
+#class-attendance
+{
+    background-image: url("../images/student-attendance-background.jpg");
+}
+
+#class-assignments
+{
+    background-image: url("../images/student-assigment-background.jpg");
+}
+
+/* Student Information */
+
+#students
+{
+    padding: 5%;
+    padding-top: 0;
+}
+
+#student-table 
+{
+    
+    border-collapse: collapse;
+
+}
+
+#student-table tr{
+
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+   
+
+
+}
+
+
+
+#students th,td{
+    text-align: center;
+}
+
+.SMore
+{
+    text-align: center;
+
+}
+
+.SEnroll_NO
+{
+    width: 20%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.SName
+{
+    width: 20%;
+}
+
+.SMore_NO:hover
+{
+    font-weight: 900;
+    font-size: x-large;
+    color: #002E4D;
+
+}
+
+.SMore
+{
+    font-size: large;
+}
+
+.SEmail
+{
+    width: 25%;
+}
+
+
+#student-table td
+{
+
+    
+    border-bottom: 1.5px solid #e0e0e0;     
+}
+
+#student-table-heading th
+{
+    border-bottom: 1.5px solid #002E4D; 
+    color: #002E4D;
+    
+    font-size: large;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.student-table-href:hover{
+    color: #002E4D;
+    font-weight: 700;
+}
+
+/* Assignment */
+
+#create-assignment{
+    background-color: #3367D5;
+    margin: 2% 10% 2% 0;
+    border-radius: 5px;
+    color: white;
+    box-shadow: 0 1px 2px 0 rgba(2, 141, 248, 0.247), 0 1px 3px 1px rgba(0, 143, 253, 0.363);
+}
+#create-assignment p{
+    font-size: x-large;
+    padding:  1.5%;
+    padding-left: 3%;
+}
+#create-assignment p:hover{
+    cursor: pointer;
+}
+
+.fa-plus
+{
+    font-weight: 100;
+}
+
+.upload-assigment-div{
+    display: flex;
+    margin: 0 10% 1% 0;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 2px 6px 2px rgb(60 64 67 / 15%);
+}
+
+.upload-assigment-name{
+    font-size: large;
+    padding-left: 3%;
+    /* overflow-x: hidden; */
+}
+
+.upload-assignment-dueDate{
+    position: absolute;
+    right: 12%;
+}
+
+
+
+.Title-div
+{
+    margin-right: 10%;
+    padding: 15px;
+    cursor: text;
+    border-bottom: solid 1px #005691;
+    background-color: #E8F1F5;
+    width: 90%;
+
+}
+
+#link-div
+{
+    width: 100%;
+    padding: 5px;
+    cursor: text;
+    border-bottom: solid 2px gray;
+
+
+}
+
+
+
+#add-link-heading
+{
+    margin: 0;
+    color: gray;
+}
+
+#Title-div
+{
+    height: 60px;
+}
+
+#Instructions-div
+{
+    height: 140px;
+
+}
+
+.Title ,#link-input
+{
+    border: none;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    padding: 0;
+    outline: none;
+
+
+}
+
+#link-div{
+    margin-top: 25px;
+    height: 40px;
+}
+.Title-heading
+{
+    margin: 0;
+    margin-bottom: 10px;
+    color: #005691;
+}
+
+#button
+{
+    margin-top: 20px;
+    display: flex;
+    color: gray;
+}
+
+
+#link-add
+{
+    margin-right: 15px;
+    color: rgba(128, 128, 128, 0.5);
+}
+
+
+
+#link-h4
+{
+    margin: 0;
+    color: gray;
+    font-weight: lighter;
+}
+#file-upload , #add-link
+{
+    color:#002E4D ;
+    font-size: medium;
+    margin-left: 5px;
+    
+}
+
+#add-link
+{
+    margin-left: 25px;
+    /* padding-left: 30px; */
+}
+
+
+#Due-Date-label , #Max-points-label
+{
+    color: #002E4D;
+    margin-left: 25px;
+    font-size: medium; 
+    margin-right: 5px;
+    font-weight: bolder;
+
+}
+
+
+#Due-Date-input , #Max-points-input
+{
+    border: solid 1px #002E4D ;
+    outline-color:#002E4D ;
+    outline-width: 2px;
+    color: #002E4D;
+    font-size: medium;
+}
+
+.create
+{
+    background-color:#002E4D;
+    color: white;
+    border-radius: 5px;
+    width: 100px;
+    height: 25px;
+    box-shadow: 2px 2px #002e4d50 ;
+}
+
+#add-link-div
+{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.226);;
+    
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    margin: auto;
+}
+
+#add-link-div-div
+{
+    width: 300px;
+    height: 170px;
+    background-color: white;
+    
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    margin: auto;
+    border-radius: 5PX;
+    text-align: left;
+    padding: 15PX;
+}
+
+#file-name , #added-link
+{
+    font-size: small;
+    font-weight: lighter;
+    font-family: Sans-serif;
+}
+
+ #view-file , #view-link
+ {
+     display: flex;
+     float: left;
+     margin-right: 3%;
+ }
+
+ 
+
+#assigment-view-main
+{
+    background-color: #3367D5;
+    margin-right: 3%;
+    margin-top: 1%;
+    color: white;
+    padding:0;
+    padding: 20px;
+    padding-bottom: 40px;
+    border-radius: 5px;
+
+}
+
+#assigment-view-title 
+{
+    margin: 0;
+}
+
+#assigment-view-Instruction
+{
+    font-size: x-small;
+    font-weight: 100;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#assigment-view-max-point , #assigment-view-due-date
+{
+    display: flex; 
+    float: right;
+    padding-left: 3%;
+}
+
+#assigment-view-max-point , #assigment-view-due-date
+{
+    display: flex; 
+    float: right;
+    padding-left: 3%;
+}
+
+
+#assigment-view-main
+{
+    background-color: #3367D5;
+    margin-right: 3%;
+    margin-top: 1%;
+    color: white;
+    padding:0;
+    padding: 20px;
+    padding-bottom: 40px;
+    border-radius: 5px;
+
+}
+
+#assigment-view-title 
+{
+    margin: 0;
+}
+
+#assigment-view-Instruction
+{
+    font-size: x-small;
+    font-weight: 100;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+
+
+#view-file , #view-link
+{
+    display: flex;
+    float: left;
+    margin-right: 3%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#footer
+{
+    width: 100%;
+    height: 30px;
+    position: fixed;
+    bottom: 0;
+    background-color: #004A7C;
+    text-align: center;
+}
+
+#footer p
+{
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 100;
+    font-size: x-small;
+    margin-top: 10px;
+}
+
+
+
+
+#personal-info  ,#assigment, #classes, #class-home-page, #students ,#create-assignment-form{ 
+    display: none;
+}
+#my-time-table
+{
+    display: block;
+}
+#abc
+{
+    background-color: red;
+}
+
+
+/* chat box css */
+
+
+
+.chat_box_dev
+{
+    border-left: #002e4de1 solid;
+    border-right: #002e4de1 solid;
+    background-color: #002e4de1;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    bottom: 0px;
+    right: 2%;
+    position: absolute;
+    color: whitesmoke;
+    padding-top: 5px;
+    padding-bottom: 2px;
+    cursor: pointer;
+    width: 28%;
+    text-align: center;
+}
+
+
+.chat_box_dev_dev:hover
+{
+    background-color: #002e4d;
+}
+
+#chat_box_dev h3
+{
+    margin: 0;
+}
+
+#chat_logo
+{
+    margin-right: 10px;
+   
+}
+
+
+#chats
+{
+    display: none;
+    bottom: 0px;
+    right: 2%;
+    position: absolute;
+    height: 90%;
+    border-left: #002e4d solid;
+    border-right: #002e4d solid;
+    background-color: white;
+    overflow: hidden;
+    width: 28%;
+
+}
+
+#input_div
+{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background-color: #002e4d;
+ 
+
+    height: 10%;
+
+}
+#input_message
+{
+    bottom: 15%;
+    top: 15%;
+    right: 5%;
+    left: 5%;
+    position: absolute;
+
+    
+}
+
+#message_container
+{
+    bottom: 12%;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 88%;
+    width: 100%;
+    position: absolute;
+    overflow:auto;
+    
+    
+}
+
+#in
+{
+    float: left;
+    width:55%;
+    margin-top: 20px;
+    overflow-wrap: break-word;
+    
+
+}
+
+#in p
+{
+    margin: 0;
+    margin-bottom: 3px;
+    margin-left: 2%;
+    
+}
+
+#name_of_sender
+{
+     background-color: #002E4D;
+     color: white;
+     font-weight: 600;
+     border-radius: 3px;
+     text-align: center;
+}
+
+#out
+{
+    float: right;
+    width: 55%;
+    margin-top: 30px;
+    overflow-wrap: break-word;
+    
+}
+
+
+
+#in_messeage,#out_message
+{
+    padding: 4%;
+    border-radius: 5px;
+    border: #002E4D solid;
+    text-align: left;
+    margin: 2%;
+}
+
+
+ #close_chat
+ {
+     font-size: x-large;
+     /* font-weight: 900; */
+    color: white;
+    position: absolute;
+    right: 2%;
+    bottom: 11%;
+    display: none;
+ }
+ #close_chat:hover
+ {
+     color: gray;
+ }
+
+ 
+#message_in_date_time
+{
+    text-align: right;
+    font-size: x-small;
+    color: green;
+    font-weight: 700;
+    margin: 0;
+}
+
+
+ 
+#message_out_date_time
+
+{
+    text-align: left;
+    font-size: x-small;
+    color: green;
+    font-weight: 700;
+    margin: 0;
+}
+
+
+
+
+
+
+/* attendance */
+
+.attendane_date 
+{
+    /* position: absolute; */
+    float: right;
+    font-size: large;
+  
+}
+
+
+.attendance_class
+{
+    font-size: medium;
+    font-weight: bolder;
+    margin-left:2%;
+    margin-right: 2%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    width: 30%;
+    text-align: center;
+    color: #002E4D;
+}
+.attence_main_div
+{
+    font-weight: 300;   
+}
+
+input[type=radio] {
+    border: 0px;
+    width: 8%;
+    height: 2em;
+}
+input[type="radio"].absent{
+    accent-color:red;
+}
+
+
+input[type="radio"].pressent{
+    accent-color:green;
+ 
+}
+
+
+
+#submit_attendance
+{
+    background-color: #005691;
+    color: white;
+    border-radius: 5px;
+    font-size: large;
+    font-weight: bold;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 3%;
+    margin-top: 2%;
+
+}
+
+#submit_attendance:hover{
+    background-color:#002E4D;
+}
+
+
+
+
+
+
+
+#attendance{
+    display: none;
+}
+
+#piechart_attendance_report{
+    width:auto;
+    display: inline;
+    float: left;
+    
+}
+
+#average-attendance
+{
+
+    background-color: #3366CC;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    width: auto;
+    margin-top: 3%;
+
+    padding-left:3%;
+    padding-right: 3%;
+
+    float: right;
+    margin-right: 10%;
+}
+
+#loder
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+/* #my-time-table
+{
+    display: none;
+} */

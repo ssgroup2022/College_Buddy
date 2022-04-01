@@ -1,0 +1,319 @@
+body
+{
+    background-color:#FAFAFA;
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+   
+}
+
+a{
+    text-decoration: none;
+}
+
+#navbar1
+{
+    width: 100%;
+    height: 20%;
+    background-color: #1B262C;
+    display: flex;
+    /* margin-left: -2%;
+    margin-right:-2%;
+    margin-top: -2%; */
+}
+
+.logo
+{
+    width: 10%;
+    height: 90%;
+    /* display: flex;
+    float: left; */
+    margin-top: 0.3%;
+    margin-left: 3%;
+}
+
+h1.collegeName
+{
+    color: white;
+   margin-left: 15;
+    font-size: x-large;
+    display: flex;
+    float: left;
+}
+
+.admission
+{
+    margin-top: 4%;
+    margin-left: 5%;
+    display: flex;
+    float: left;
+    color: white;
+    text-decoration: none;
+}
+
+.login
+{
+    margin-top: 4%;
+    margin-left: 3%;
+    width: 10%;
+    height: 25%;
+    display: flex;
+    float: left;
+    color: white;
+   text-align: left;
+   flex-direction: column;
+
+}
+
+.login_part1
+{
+    color: white;
+    text-decoration: none;
+}
+
+.login_part2_list
+{
+            margin-left: 2%;
+   font-size: small;   
+}
+
+.login_part2_li
+{
+    margin-left: -32%;
+    margin-top: 12%;
+}
+
+.hide
+{
+    display: none;
+   
+}
+
+.login_part1:hover + .hide,.hide:hover
+{
+   display: block;
+            position:relative;
+            margin-top: 1.25%;
+    background-color: #1B262C;
+   text-align: left;
+   
+   
+}
+
+.login_part2_a
+{
+    text-decoration: none;
+    color: white;
+}
+
+.login_part2_a:hover
+{
+    text-decoration:underline;
+}
+
+#navbar2
+{
+    width: 100%;
+    background-color: #E8F1F5;
+    padding: 10px;
+    position: -webkit-sticky; 
+    position: sticky;
+    top: 0;
+    display: flex;
+}
+
+.home, .about, .course , .placement, .society, .contact-us
+{
+    margin-left:7%;
+
+}
+
+.home
+{
+    margin-left: 5%;
+}
+
+.home-a, .about-a, .course-a , .placement-a, .society-a, .contact-us-a
+{
+    color: #1B262C ;
+    font-weight: 600;
+}
+
+.home-a:hover, .about-a:hover, .course-a:hover , .placement-a:hover, .society-a:hover, .contact-us-a:hover
+{
+    text-decoration: underline;
+}
+
+.course-item
+{
+    display: none;
+}
+
+.course-a:hover+.course-item , .course-item:hover
+{
+    display: block;
+          position: absolute;
+          width: 10%;
+          padding: 0 1% 0 0;
+          margin: 0%;
+    background-color: #E8F1F5;
+    
+}
+
+.course-ul
+{
+    list-style: disc;
+    
+}
+
+.course-li
+{
+    
+    padding-top: 5%;
+          margin-left: -10%;
+
+}
+
+
+.course-li1-a, .course-li2-a
+{
+    text-decoration: none;
+    color: #1B262C;
+    font-size:small;
+    font-weight: 700;
+    
+    
+}
+
+.course-li1-a:hover, .course-li2-a:hover
+{
+    text-decoration: underline;
+}
+
+.course-li1-div
+{
+    display: none;
+}
+
+.course-li1-a:hover+.course-li1-div, .course-li1-div:hover
+{
+    display: block;
+    text-align: left;
+
+}
+
+
+.course-li1-dev-ul
+{
+    list-style:disc;
+}
+
+
+.course-li1-dev-li
+{
+    text-decoration: none;
+    font-size: small;
+    margin-left: -20%;
+    padding-top: 3%;
+
+
+}
+
+.course-li1-dev-a
+{
+    color: #1B262C;
+    text-align: left;
+    text-decoration: none;
+}
+
+.course-li1-dev-a:hover
+{
+    text-decoration: underline;
+}
+
+.course-li2-div
+{
+    display: none;
+}
+
+.course-li2-a:hover+.course-li2-div,.course-li2-div:hover
+{
+    display: block;
+}
+
+.society-div
+{
+    display: none;
+}
+
+.society-a:hover + .society-div,.society-div:hover
+{
+    display: block;
+            position: absolute;
+    background-color: #E8F1F5;
+}
+
+.society-ul
+{
+    list-style: disc;
+}
+
+.society-li
+{
+    margin-left: -17%;
+    padding-bottom: 9%;
+}
+
+.society-a1
+{
+    text-decoration: none;
+    color: #1B262C;
+    font-size: small;
+    font-weight: 500;
+}
+
+.society-a1:hover
+{
+    text-decoration: underline;
+}
+
+.contact-us-div
+{
+    display: none;
+}
+
+.contact-us-a:hover + .contact-us-div, .contact-us-div:hover
+{
+    display: block;
+                  position: absolute;
+                  width: 10%;
+                  padding-right: 1%;
+    background-color: #E8F1F5;
+}
+
+.contact-us-li
+{
+    margin-left: -12%;
+}
+.contact-us-a1
+{
+    text-decoration: none;
+    color: #1B262C;
+}
+
+.contact-us-a1:hover
+{
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+

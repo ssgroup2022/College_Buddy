@@ -1,0 +1,332 @@
+<!-- /////////////////////////// Home Page for students of the University /////////////////////////// -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>USICT Student</title>
+    <link rel="stylesheet" href="../student_info/student_info.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <!-- Navbar containing name and logo and student details -->
+    <div id="nav-bar">
+
+        <img src="../images/logo.jpg" alt="" class="logo">
+        <br>
+        <h1 class="collegeName">University School of Information, Communication & Technology</h1>
+
+        <div id="teacher_basic_info"><p id="teacher_name"><%=student_name%></p><p id="teacher_id"><%=class_name%></p><p id="student_id" style="display: none;"><%=student_id%></p>
+        </div>
+
+        <img src="<%=src%>" alt="" id="teacher_img">
+
+    </div>
+
+
+
+    <!-- Main div containing everything other than navbar -->
+    <div id="main">
+
+        <!-- Side Navbar containing navbar items -->
+        <div id="side-bar">
+
+            <div id="side-bar-div">
+
+                <ul id="side-bar-ul">
+                    <li class="side-bar-li">Home</li>
+                    <li class="side-bar-li" id="side-bar-li-myProfile"
+                        onclick="display(document.getElementById('my_Profile'))">My Profile <img
+                            src="../images/darrow.png" alt="" class="darrow"></li>
+
+                    <div id="my_Profile">
+
+                        <li class="side-bar-li-li" onclick="displayOn(document.getElementById('personal-info'))">
+                            Personal Information</li>
+                        <li class="side-bar-li-li" onclick="displayOn(document.getElementById('my-time-table'))">Time
+                            Table </li>
+                        <li class="side-bar-li-li">Attendance</li>
+
+                    </div>
+
+                    <li class="side-bar-li" id="side-bar-li-allocatedClass">Alloted Subjects <img
+                            src="../images/darrow.png" alt="" class="darrow"></li>
+
+                    <!-- Show the list of alloted classes to the teacher -->
+                    <div id="allocated-classes">
+
+                        <%for(var i=0;i<subjects.length;i++){%>
+                            <li class="side-bar-li-li" id="<%=subjects[i].subject_id %>"onclick="click_on_subject('<%=subjects[i].subject_name %>','<%=subjects[i].subject_id %>')"><%=subjects[i].subject_id%></li>
+                        <%}%>
+
+                    </div>
+
+                    <li class="side-bar-li">Complaint</li>
+                </ul>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Main div containing all the content of student -->
+        <div id="content">
+
+            <div id="content-div">
+
+                <!-- Personal Information of student-->
+                <div id="personal-info">
+
+                    <img src="../images/default_teacher_image.png" alt="" id="my_img">
+                    <p id="my_name">{{Student_Name}}</p>
+                    <p id="my_id">{{Student_Id}}</p>
+
+                </div>
+
+                <!-- Weekly Time table of student -->
+                <div id="my-time-table">
+
+                    <h2 id="time-table-heading">My Time table</h2>
+                    <ul id="colorPalette">
+                        <li class="no-classColor">No Class</li>
+                        <li class="lunch-timeColor">Lunch Time</li>
+                        <li class="todayColor">Toady</li>
+                        <li class="on-goingColor">On-Going Class</li>
+                        <li class="next-classColor">Next Class Alert</li>
+                    </ul>
+
+                    <!-- Time table of student -->
+                    <table id="teacher-time-table">
+
+                        <tr>
+                            <th></th>
+                            <th class="table-time">9-10am</th>
+                            <th class="table-time">10-11am</th>
+                            <th class="table-time">11am-12pm</th>
+                            <th class="table-time">12-1pm</th>
+                            <th class="table-time">1-2pm</th>
+                            <th class="table-time">2-3pm</th>
+                            <th class="table-time">3-4pm</th>
+                            <th class="table-time">4-5pm</th>
+                        </tr>
+
+                        <% for(var day_number=1;day_number<8;day_number++) { %>
+
+                            <tr>
+
+                                <th id="<%=days[day_number-1]%>" class="weekday <%=days[day_number-1]%>">
+                                    <%=`${days[day_number-1]}`%>
+                                </th>
+
+                                <% for(var slot_number=1;slot_number<9;slot_number++) { %>
+
+                                    <% if(index<results.length && results[index].day_number==day_number && results[index].slot_number==slot_number){ %>
+
+                                        <td id="<%=days[day_number-1]%>_<%=8+slot_number%>"class="<%=days[day_number-1]%> checkclass"><%=results[index].subject_id%> (<%=results[index].teacher_name%>)</td>
+                                        <% index++; %>
+
+                                    <% } else if(slot_number==5){ %>
+
+                                        <td id="<%=days[day_number-1]%>_<%=8+slot_number%>" class="<%=days[day_number-1]%> lunchTime checkclass">Lunch Time</td>
+
+                                    <% } else { %>
+
+                                        <td id="<%=days[day_number-1]%>_<%=8+slot_number%>" class="<%=days[day_number-1]%> checkclass">No Class</td>
+                                    
+                                    <% } %>
+
+                                <% } %>
+
+                            </tr>
+
+                        <% } %>
+
+                    </table>
+
+                    <button type="button" id="join-button">Join On-Going Class</button>
+
+                </div>
+
+
+
+                <!-- Alloted Classes Contents/Nav-items (Information about all the classes of that particular student) -->
+                <div id="classes">
+
+                    <!-- Class Name shown as Heading-->
+                    <h2 id="class-name">
+                        <p id="class-name-name" style="display: inline;"></p>
+                        (<p id="class-name-subject" style="display: inline;"></p>)
+                    </h2>
+
+                    <!-- Page containing all the info about that particular subject -->
+                    <div id="class-home-page">
+                        <div id="class-students" style="cursor: pointer;" class="class-info">
+                            <h1>Teacher & Bachmates Information</h1>
+                        </div>
+                        <div id="class-attendance" class="class-info"></div>
+                        <div id="class-assignments" style="cursor: pointer;" class="class-info"></div>
+
+
+                        <div id="chat_box_dev" class="chat_box_dev_dev chat_box_dev">
+                            <h3 id="chat_box"><i class='far fa-comment' id="chat_logo"></i>Live Chat Room</h3>
+                            <div id="close_chat" >x</div>
+                        </div>
+                        <div id="chats">
+                            
+                            <div id="message_container">
+                            </div>
+                            
+                            <div id="input_div">
+                               <textarea name="" id="input_message" cols="30" rows="1"></textarea>
+                            </div>
+                            
+
+                        </div>
+                    </div>
+
+                    <!-- List of Batchmates and (Information about teacher of that subject) -->
+                    <div id="students">
+
+                        <table id="student-table">
+                            <tr id="student-table-heading">
+                                <th class="SEnroll_NO">Enrollment No.</th>
+                                <th class="SName">Name</th>
+                                <th class="SEmail">Email id</th>
+                                <th class="SPhone">Phone Number</th>
+                                <th class="SMore">About More</th>
+                            </tr>
+                        </table>
+
+                    </div>
+
+                    <div id="attendance_report">
+                        <div class = "upload-assigment-div" id="attence_main_div"   >
+                            <p id="attendance_eno" class="attendance_class">Date</p>
+                            <p id="attendance_na" class="attendance_class">Pressent/Abbsent</p>
+                            <p id="attendance_p" class="attendance_class">Total class</p>
+                            <p id="attendance_p" class="attendance_class">Total Attended classes</p>
+                            <p id="attendance_p" class="attendance_class">Percentage(%)</p>
+                         </div>
+
+                         <div id="student_attendance_report"> 
+
+                         </div>
+
+                         <div id="piechart_attendance_report" ></div>
+                         <div style="display: inline;" id="average-attendance">
+
+                         </div>
+                      
+
+                    </div>
+
+                    <!-- Div for showing assignments -->
+                    <div id="assigment">
+
+                        <div id="upload-assignment"></div>
+
+                    </div>
+
+                    <!-- The assignment-view UI when an assignment is clicked -->
+                    <div id="assigment-view" style="display: none;">
+
+                        <div id="assigment-view-main">
+                            <p id="assigment_id" style="display: none;"></p>
+                            <h4>Title:</h4>
+                            <h4 id="assigment-view-title"></h4>
+                            <hr>
+                            <h4>Instruction:</h4>
+                            <p id="assigment-view-Instruction"></p>
+                            <hr>
+                            <br>
+                            <i class="fas fa-file-pdf" id="view-file"
+                                style="font-size: medium; color: white; cursor: pointer;"></i>
+                            <i class="fas fa-link" id="view-link" style="font-size: medium; color: white;"></i>
+                            <p id="assigment-view-due-date"></p>
+                            <p id="assigment-view-max-point" style="padding-right: 0;"></p>
+                            <br>
+                        </div>
+
+                        <div id="submit_assigment">
+                            <span id="submitted_late">Submitted Late!</span>
+                            <p style="display: none;" id="submit_assigment_id"></p>
+                            <form action="">
+                                <div onclick="document.getElementById('file_submit').click();" id="add_file_click"> +
+                                    Add File</div>
+                                <input type="file" id="file_submit" name="student_file_submit" style="display: none;">
+                                <button type="submit" id="add_file_submit" name="submit">Submit Now</button>
+                            </form>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- PDF UI shown to student when he click on the pdf sent by his teacher -->
+                <div id="pdf_viewer">
+
+                    <div id="previous">
+                        <i class="fa fa-angle-left"></i>
+                    </div>
+
+                    <div id="canvas">
+                        <i class="fas fa-check" id="check_mark"></i>
+                        <canvas id="inside_canvas">
+                        </canvas>
+                        <div id="current_page"></div>
+                    </div>
+
+                    <div id="next">
+                        <i class="fa fa-angle-right"></i>
+
+                        <div id="assigment_note">
+                            <span id="marks_heading">Marks: </span> <span id="marks_of_page">3/10</span>
+                            <p id="note_heading">Note By Teacher: </p>
+                            <div id="note_container">
+                                <p id="note_paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quos
+                                    natus, et beatae quas maxime voluptate iure porro in fugiat? Incidunt?</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- Footer -->
+    <div id="footer">
+        <p>Copyright &copy; SS GROUP 2021</p>
+    </div>
+
+
+
+    <!-- Local js file -->
+    
+
+    <!-- js files for making pdf-viewer  -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../student_info/student_info.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.5/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js"></script>
+
+
+</body>
+
+</html>

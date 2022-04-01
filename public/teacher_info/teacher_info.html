@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="teacher_info.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+    
+    <div id="nav-bar">
+
+        <img src="../images/logo.jpg" alt="" class="logo">
+        <br>
+        <h1 class="collegeName">University School of Information, Communication & Technology</h1>
+       
+        <div id="teacher_basic_info"> 
+            <p id="teacher_name">xxxxxxxxxxx</p>
+            <p id="teacher_id">xxxxxxxxx</p>
+        </div>
+        <img src="../images/default_teacher_image.png" alt="" id="teacher_img">
+    </div>
+
+    <div id="main">
+
+        
+        <div id="side-bar">
+
+            <div id="side-bar-div">
+                <ul id="side-bar-ul">
+                    <li class="side-bar-li">Home</li>
+                    <li class="side-bar-li" id="side-bar-li-myProfile" onclick="display(document.getElementById('my_Profile'))">My Profile <img src="../images/darrow.png" alt="" class="darrow"></li>
+                        <div id="my_Profile" >
+                            <li class="side-bar-li-li" onclick="displayOn(document.getElementById('personal-info'))">Personal Information</li>
+                            <li class="side-bar-li-li" onclick="displayOn(document.getElementById('my-time-table'))">Time Table </li>
+                            <li class="side-bar-li-li">Attendance</li>
+                        </div>
+
+                    <li class="side-bar-li" id="side-bar-li-allocatedClass"  onclick="display(document.getElementById('allocated-classes'))">Alloted Classes <img src="../images/darrow.png" alt="" class="darrow"></li>
+                        <div id="allocated-classes">
+                            <li class="side-bar-li-li"  onclick="displayOn(document.getElementById('classes'))">Class 1</li>
+                            <li class="side-bar-li-li"  onclick="displayOn(document.getElementById('classes'))">Class 2</li>
+                            <li class="side-bar-li-li"  onclick="displayOn(document.getElementById('classes'))">Class 3</li>
+                        </div>
+                    <li class="side-bar-li">Complaint</li>
+                </ul>
+            </div>
+        </div>
+    
+        <div id="content">
+            <div id="content-div">
+
+                <!-- Personal Information -->
+
+                <div id="personal-info">
+
+                    <img src="../images/default_teacher_image.png" alt="" id="my_img">
+                    <p id="my_name">xxxxxxxxxxx</p>
+                    <p id="my_id">xxxxxxxxx</p>
+
+                </div>
+
+                <!-- My Time table -->
+
+                <div id="my-time-table">
+                    <h2 id="time-table-heading">My Time table</h2>
+                    <ul id="colorPalette">
+                        <li class="no-classColor">No Class</li>
+                        <li class="lunch-timeColor">Lunch Time</li>
+                        <li class="todayColor">Toady</li>
+                        <li class="on-goingColor">On-Going Class</li>
+                        <li class="next-classColor">Next Class Alert</li>
+                    </ul>
+                    <table  id="teacher-time-table">
+                    <tr>
+                        <th></th>
+                        <th class="table-time">9-10am</th>
+                        <th class="table-time">10-11am</th>
+                        <th class="table-time">11am-12pm</th>
+                        <th class="table-time">12-1pm</th>
+                        <th class="table-time">1-2pm</th>
+                        <th class="table-time">2-3pm</th>
+                        <th class="table-time">3-4pm</th>
+                        <th class="table-time">4-5pm</th>
+                    </tr>
+
+                        
+                    </table>
+
+
+                    <button type="button" id="join-button">
+                        <a href="">Join On-Going Class</a>
+                    </button>
+                </div>
+
+                <!-- Classes -->
+
+                <div id="classes">
+                    <h2 id="class-name">Computer Science and Engineering</h2>
+                    <div id="class-home-page">
+                        <div id="class-students" class="class-info">
+                            <h1>STUDENTS Information</h1>  
+                        </div>
+                        <div id="class-attendance" class="class-info">
+                        </div>
+                        <div id="class-assignments" class="class-info">
+                        </div>
+                    </div>
+
+                    <div id="students">
+                        <table id="student-table">
+                            <tr id="student-table-heading">
+                                <th>Enrollment Number</th>
+                                <th>Name</th>
+                                <th>Email id</th>
+                                <th>Phone Number</th>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div id="assigment">
+                        <div id="create-assignment"><p onclick="create_assignment_click()"><i class="fa fa-plus" style ="font-size: large;"></i> Create Assignment</p></div>
+                        
+                        <form action="" id="create-assignment-form" onsubmit="return false">
+                            <label for="assignment-name">Enter the Assignment Name</label>
+                            <input type="text" id="assignment-name"  maxlength="50" required>
+
+                            <label for="assignment-desc">Description</label>
+                            <textarea id="assignment-desc" cols="30" rows="10" maxlength="1000"></textarea>
+
+                            <label for="assignment-file">Add file</label>
+                            <input type="file" id="assignment-file" name="upload" accept=".doc,application/pdf,application/vnd.ms-excel,application/msword,image/jpeg" />
+                            
+                            <label for="assignment-dueDate">Due Date</label>
+                            <input type="date" id="assignment-dueDate" required>
+
+                            <label for="assignment-score">Set Scores</label>
+                            <input type="number" id="assignment-score" maxlength="5" required>
+
+                            <button type="submit" onclick="create_click()">Create</button>
+                        </form>
+                        <div id="upload-assignment">
+                            
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                
+
+
+                
+
+
+                
+
+                
+
+
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <div id="footer">
+        <p>Copyright &copy; SS GROUP 2021</p>
+    </div>
+
+    <script src="teacher_info.js"></script>
+</body>
+</html>
