@@ -36,14 +36,18 @@ app.use(upload());
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(staticpath));
-
+try{
 var connection = mysql.createConnection({
   host: "brescj0gatwbjsa4thuq-mysql.services.clever-cloud.com",
   user: "uwikx1435rexs7sg",
   password: "6JlQladlhsIIhbXWRVXt",
   database: "brescj0gatwbjsa4thuq",
 });
-
+}
+catch(err)
+{
+  console.log("error in connection");
+}
 // var connection = mysql.createConnection({
 //   host: "localhost",
 //   user: "root",
