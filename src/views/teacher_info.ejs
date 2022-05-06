@@ -1,0 +1,441 @@
+<!-- /////////////////////////// Home Page for teachers of the University /////////////////////////// -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../teacher_info/teacher_info.css">
+    <link rel="stylesheet" href="../loder/loder.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+</head>
+
+<body>
+
+
+    <!-- Navbar containing name and logo and student details -->
+    <div id="nav-bar">
+
+        <img src="../images/logo.jpg" alt="" class="logo">
+        <br>
+        <h1 class="collegeName">University School of Information, Communication & Technology</h1>
+
+        <div id="teacher_basic_info">
+            <p id="teacher_name"><%=Teacher_Name%></p>
+            <p id="teacher_id"><%=Teacher_Id%></p>
+        </div>
+
+        <img src="<%=src%>" alt="" id="teacher_img">
+
+    </div>
+
+
+
+    <!-- Main div containing everything other than navbar -->
+    <div id="main">
+
+        <!-- Side Navbar containing navbar items -->
+        <div id="side-bar">
+
+            <div id="side-bar-div">
+
+                <ul id="side-bar-ul">
+                    <li class="side-bar-li">Home</li>
+                    <li class="side-bar-li" id="side-bar-li-myProfile"
+                        onclick="display(document.getElementById('my_Profile'))">My Profile <img
+                            src="../images/darrow.png" alt="" class="darrow"></li>
+
+                    <div id="my_Profile">
+                        <li class="side-bar-li-li" onclick="displayOn(document.getElementById('personal-info'))">
+                            Personal Information</li>
+                        <li class="side-bar-li-li" onclick="displayOn(document.getElementById('my-time-table'))">Time
+                            Table </li>
+                        <li class="side-bar-li-li">Attendance</li>
+                    </div>
+
+                    <li class="side-bar-li" id="side-bar-li-allocatedClass">Alloted Classes <img
+                            src="../images/darrow.png" alt="" class="darrow"></li>
+
+                    <!-- Show the list of alloted subjects to student -->
+                    <div id="allocated-classes">
+
+                        <%for(i=0;i<classes.length;i++){%>
+                            <li class="side-bar-li-li" id="<%=classes[i].class_name %>"
+                                onclick="displayonclass('<%=classes[i].class_name %>')">
+                                <%=classes[i].class_name%>
+                            </li>
+                            <%}%>
+
+                    </div>
+
+                    <li class="side-bar-li">Complaint</li>
+                </ul>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- Main div containing all the content of teacher -->
+        <div id="content">
+            <div id="content-div">
+
+                <div id="loder">
+                    <div id="main_loder">
+                        
+                        <div id="a1" class="class">
+                            <h2>U</h2>
+                
+                        </div>
+                     
+                          <div id="a2" class="class">
+                            <h2>S</h2>
+                
+                        </div>
+                         
+                          <div id="a3" class="class">
+                            <h2>I</h2>
+                
+                        </div>
+                         
+                          <div id="a4" class="class">
+                            <h2>C</h2>
+                
+                        </div>
+                       
+                          <div id="a5" class="class">
+                              <h2>T</h2>
+                        </div>
+                        <div id="please_wait">
+                            <h5>Please Wait...</h5>
+                        </div>
+                        <div id="a6" class="class">
+                            <img src="../loder/filename.jpg" alt="" id="image">
+                
+                        </div>
+                          
+                    </div>
+                </div>
+
+                <!-- Personal Information of teacher -->
+                <div id="personal-info">
+
+                    <img src="../images/default_teacher_image.png" alt="" id="my_img">
+                    <p id="my_name">{{Teacher_Name}}</p>
+                    <p id="my_id">{{Teacher_Id}}</p>
+
+                </div>
+
+                <!-- Weekly Time table of teacher -->
+                <div id="my-time-table">
+
+                    <h2 id="time-table-heading">My Time table</h2>
+                    <ul id="colorPalette">
+                        <li class="no-classColor">No Class</li>
+                        <li class="lunch-timeColor">Lunch Time</li>
+                        <li class="todayColor">Toady</li>
+                        <li class="on-goingColor">On-Going Class</li>
+                        <li class="next-classColor">Next Class Alert</li>
+                    </ul>
+
+                    <table id="teacher-time-table">
+
+                        <tr>
+                            <th></th>
+                            <th class="table-time">9-10am</th>
+                            <th class="table-time">10-11am</th>
+                            <th class="table-time">11am-12pm</th>
+                            <th class="table-time">12-1pm</th>
+                            <th class="table-time">1-2pm</th>
+                            <th class="table-time">2-3pm</th>
+                            <th class="table-time">3-4pm</th>
+                            <th class="table-time">4-5pm</th>
+
+                        </tr>
+                        
+
+                        <% for(day_number=1;day_number<8;day_number++) { %>
+
+                            <tr>
+
+                                <th id="<%=days[day_number-1]%>" class="weekday <%=days[day_number-1]%>">
+                                    <%=`${days[day_number-1]}`%>
+                                </th>
+
+                                <% for(slot_number=1;slot_number<9;slot_number++) { %>
+
+                                    <% if(index<results.length && results[index].day_number==day_number && results[index].slot_number==slot_number){ %>
+
+                                        <td id="<%=days[day_number-1]%>_<%=8+slot_number%>" class="<%=days[day_number-1]%> checkclass"><%=results[index].class_name%>(<%=results[index].subject_id%>)</td>
+                                        <% index++; %>
+
+                                    <% } else if(slot_number==5){ %>
+
+                                        <td id="<%=days[day_number-1]%>_<%=8+slot_number%>" class="<%=days[day_number-1]%> lunchTime checkclass">Lunch Time</td>
+
+                                    <% } else { %>
+
+                                        <td id="<%=days[day_number-1]%>_<%=8+slot_number%>" class="<%=days[day_number-1]%> checkclass">No Class</td>
+
+                                    <% } %>
+
+                                <% } %>
+
+                            </tr>
+
+                        <% } %>
+
+                    </table>
+
+                    <button type="button" id="join-button">Take Attendance</button>
+
+                </div>
+
+
+                <div id="attendance">
+                    <h2  class="class-name" >
+                        <p  class="class_name_in_attendance" style="display: inline;">CSE-I</p>
+                    </h2>
+                    <h2  class="attendane_date class-name ">
+                        <p  style="display: inline;">Mar 20,2022</p>
+                    </h2>
+
+                    <div class = "upload-assigment-div" id="attence_main_div"   >
+                       <p id="attendance_en" class="attendance_class">Enrollment Number</p>
+                       <p id="attendance_na" class="attendance_class">Name</p>
+                       <p id="attendance_p" class="attendance_class">Pressent or Absent</p>
+                      
+                     
+                    </div>
+                    <div id="attendance_div">
+                        
+
+                    </div>
+                    <button id="submit_attendance">Submit</button>
+                </div>
+
+
+
+                <!-- Alloted Classes Contents/Nav-items (Information about all the classes of that particular teacher) -->
+                <div id="classes">
+
+                    <!-- Class Name shown as Heading-->
+                    <h2 id="class-name">
+                        <p id="class-name-name" style="display: inline;"></p>
+                        <p id="class-name-subject" style="display: inline;"></p>
+                    </h2>
+
+                    <!-- It contains the Information of all the subjects(taken by that teacher) of that particular class -->
+                    <div id="subject_of_class">
+
+                    </div>
+
+                    <!-- Page containing all the info about that particular subject of that particular class -->
+                    <div id="class-home-page">
+                        <div id="class-students" style="cursor: pointer;" class="class-info">
+                            <h1>STUDENTS Information</h1>
+                        </div>
+                        <div id="class-attendance" class="class-info">
+                        </div>
+                        <div id="class-assignments" style="cursor: pointer;" class="class-info">
+                        </div>
+
+
+
+                        <!-- chat box -->
+
+                        <div id="chat_box_dev" class="chat_box_dev_dev chat_box_dev">
+                            <h3 id="chat_box"><i class='far fa-comment' id="chat_logo"></i>Live Chat Room</h3>
+                            <div id="close_chat" >x</div>
+                        </div>
+
+                        <div id="chats">
+                            
+                            <div id="message_container">
+                            </div>
+                            
+                            <div id="input_div">
+                               <textarea name="" id="input_message" cols="30" rows="1"></textarea>
+                            </div>
+                            
+
+                        </div>
+                    </div>
+
+                    <!-- List of all Students and (Information about those students of that subject) -->
+                    <div id="students">
+
+                        <table id="student-table">
+                            <tr id="student-table-heading">
+                                <th class="SEnroll_NO">Enrollment No.</th>
+                                <th class="SName">Name</th>
+                                <th class="SEmail">Email id</th>
+                                <th class="SPhone">Phone Number</th>
+                                <th class="SMore">About More</th>
+                            </tr>
+                        </table>
+
+                    </div>
+
+
+
+                    <!-- attendance report -->
+                    <div id="attendance_report">
+                        <div class = "upload-assigment-div" id="attence_main_div"   >
+                            <p id="attendance_eno" class="attendance_class">Enrollment Number</p>
+                            <p id="attendance_na" class="attendance_class">Name</p>
+                            <p id="attendance_p" class="attendance_class">Total class</p>
+                            <p id="attendance_p" class="attendance_class">Total Attended classes</p>
+                            <p id="attendance_p" class="attendance_class">Percentage(%)</p>
+                         </div>
+
+                         <div id="student_attendance_report"> 
+
+                         </div>
+
+                         <div id="piechart_attendance_report" ></div>
+                         <div style="display: inline;" id="average-attendance">
+
+                         </div>
+                      
+
+                    </div>
+
+
+                    <!-- Div for showing assignments -->
+                    <div id="assigment">
+
+                        <div id="create-assignment">
+                            <p onclick="create_assignment_click()"><i class="fa fa-plus" style="font-size: large;"></i>
+                                Create Assignment</p>
+                        </div>
+
+                        <div id="upload-assignment"></div>
+
+                        <!-- The assignment-creating UI when an create assignment is clicked -->
+                        <div id="assignment-form">
+
+                            <form action="/Create_Assigment" method="post" id="create-assignment-form">
+
+                                <div id="Title-div" class="Title-div">
+                                    <h2 id="Title-heading" class="Title-heading">Title</h2>
+                                    <textarea name="Title" id="Title" class="Title" cols="" rows=""></textarea>
+                                </div>
+
+                                <br>
+
+                                <div id="Instructions-div" class="Title-div">
+                                    <h2 id="Instructions-heading" class="Title-heading">Instructions (optional)</h2>
+                                    <textarea name="Instructions" id="Instructions" class="Title" cols=""
+                                        rows=""></textarea>
+                                </div>
+
+                                <br>
+
+                                <div id="assigment-links">
+                                    <i class="fas fa-file-upload" id="file-upload" style="cursor: pointer;"
+                                        onclick="document.getElementById('input-file').click()"><i id="file-name"> No
+                                            File</i></i>
+                                    <i class="fas fa-link" id="add-link" style="cursor: pointer;"
+                                        onclick="document.getElementById('add-link-div').style.display='block'"> </i>
+                                    <input name="file" style="display: none;" id="input-file" type="file">
+                                    <label for="" id="Due-Date-label">Due date & time</label>
+                                    <input type="datetime-local" name="Due_Date" id="Due-Date-input">
+
+                                    <label for="" id="Max-points-label">Maximum Points</label>
+                                    <input type="number" name="Max_Score" id="Max-points-input" max="100" min="1">
+                                </div>
+
+                                <div id="add-link-div" style="display: none;">
+
+                                    <div id="add-link-div-div">
+                                        <h3 id="add-link-heading">Add link</h3>
+
+                                        <div id="link-div">
+                                            <h4 id="link-h4">Link</h4>
+                                            <input type="url" id="link-input" name="link">
+                                        </div>
+
+                                        <div id="button">
+                                            <h4 id="link-add">Add link</h4>
+                                            <h4 id="link-cancel" style="cursor: pointer;">Cancel</h4>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <br>
+
+                                <button type="submit" class="create">Create</button>
+                                <button type="reset" class="create" id="reset">Reset</button>
+                                <button type="reset" class="create" id="cancell-assigment-form">Cancel</button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- The assignment-view UI when an assignment is clicked -->
+                    <div id="assigment-view" style="display: none;">
+
+                        <div id="assigment-view-main">
+                            <p id="assigment_id" style="display: none;"></p>
+                            <h4>Title:</h4>
+                            <h4 id="assigment-view-title"></h4>
+                            <hr>
+                            <h4>Instruction:</h4>
+                            <p id="assigment-view-Instruction"></p>
+                            <hr>
+                            <br>
+                            <i class="fas fa-file-pdf" id="view-file"
+                                style="font-size: medium; color: white; cursor: pointer;"></i>
+                            <i class="fas fa-link" id="view-link" style="font-size: medium; color: white;"></i>
+                            <p id="assigment-view-due-date"></p>
+                            <p id="assigment-view-max-point" style="padding-right: 0;"></p>
+                            <br>
+                        </div>
+
+                        <div id="assigment_view_student"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <!-- Footer -->
+    <div id="footer">
+        <p>Copyright &copy; SS GROUP 2021</p>
+    </div>
+
+    <!-- Local js files -->
+
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="../loder/loder.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="../teacher_info/teacher_info.js"></script>
+   
+
+    
+</body>
+
+</html>
