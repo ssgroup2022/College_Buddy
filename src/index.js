@@ -3,6 +3,14 @@ const app = express();
 const path = require("path");
 const mysql = require("mysql");
 // const async = require("hbs/lib/async");
+// hello sir
+
+
+
+
+
+const { google } = require('googleapis');
+
 const fs = require("fs");
 const { NONAME, CONNREFUSED, LOADIPHLPAPI } = require("dns");
 const req = require("express/lib/request");
@@ -36,26 +44,48 @@ app.use(upload());
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(staticpath));
-try{
-var connection = mysql.createConnection({
-  host: "brescj0gatwbjsa4thuq-mysql.services.clever-cloud.com",
-  user: "uwikx1435rexs7sg",
-  password: "6JlQladlhsIIhbXWRVXt",
-  database: "brescj0gatwbjsa4thuq",
-});
-}
-catch(err)
-{
-  console.log("error in connection");
-}
-// var connection = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "root",
-//   database: "ss_group",
-// });
+
+ var connection = mysql.createConnection({
+   host: "localhost",
+    port: '3306',
+   user: "root",
+   password: "Sonu@1234",
+   database: "collegebuddy",
+    insecureAuth : true
+ });
+
+
+
 
 connection.connect();
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------
+
+const CLIENT_ID = '507797866991-c6qs52s7l6tl2mhnvfvmvnqknkbaro32.apps.googleusercontent.com';
+const CLIENT_SECRET = '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';
+const REDIRECT_URI = 'https://developers.google.com/oauthplayground';
+const REFRESH_TOKEN = '1//04omJyrWB7FhHCgYIARAAGAQSNwF-L9Ir5SYEe95Nzv3-ZX-uP9qIiDiI-LbY0Fs6YD6NUjoDA39r7U5I5sBOs4MS5O3oZYSF-z4';
+
+const oauth2Client = new google.auth.OAuth2(
+  CLIENT_ID,
+  CLIENT_SECRET,
+  REDIRECT_URI
+);
+
+oauth2Client.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+const drive = google.drive({
+  version: 'v3',
+  auth: oauth2Client,
+});
+
+// ------------------------------------------------------------------------------------------------------------
+
+
+
+
 
 app.get("/", (req, res) => {
   res.render("index");
@@ -199,15 +229,62 @@ app.post("/Create_Assigment", (req, res) => {
   const link = data.link;
   const due_date_and_time = data.due_date_and_time;
   const max_point = data.max_point;
-
+  let file_id = "";
   if (req.files != null) {
     const add_file = req.files.uploaded_files;
-    file_path ="Assigment_Upload/" +`${teacher_assignment_id}` +"ss_group" +add_file.name;
+    file_path ="../Assigment_Upload/" +`${teacher_assignment_id}` +"ss_group" +add_file.name;
     add_file.mv(file_path);
-    file_name = add_file.name;
+    file_name = `${teacher_assignment_id}`+"ss_group" +add_file.name;
+
+
+// ------------------------------------------------------------------------------------------------------------------------------
+  const filePath = path.join(path.join(__dirname, '../Assigment_Upload'),file_name);
+  console.log(filePath);
+  
+  async function uploadFile() {
+    try {
+      const response = await drive.files.create({
+        requestBody: {
+          name: file_name,
+          mimeType: 'application/pdf',
+        },
+        media: {
+          mimeType: 'application/pdf',
+          body: fs.createReadStream(filePath),
+        },
+      });
+  
+      console.log(response.data.id);
+
+  if(response.data.id!=null)
+      {
+         file_id = response.data.id;
+        fs.unlink(file_path,(err)=>{
+          if(err)
+          {
+            console.log(err);
+          }
+  
+        });
+
+      }
+
+
+   
+   } catch (error) {
+      console.log(error.message);
+    }
+  }
+  
+  uploadFile();
+  // -------------------------------------------------------------------------------------------------------------------------
+
+
+
+
   }
 
-  connection.query(`insert into assigment(class_id, subject_id, assigment_id, teacher_id, title, instructions, file_path, link, due_date_and_time, max_point,file_name) select C.class_id , S.subject_id ,"${teacher_assignment_id}" , "${teacher_id}" ,"${title}","${instructions}","${file_path}","${link}","${due_date_and_time}",${max_point} ,"${file_name}"  from classes C ,subject S  where C.class_name = "${class_name}" and S.subject_name = "${subject_name}";`,
+  connection.query(`insert into assigment(class_id, subject_id, assigment_id, teacher_id, title, instructions, link, due_date_and_time, max_point,file_name,file_id) select C.class_id , S.subject_id ,"${teacher_assignment_id}" , "${teacher_id}" ,"${title}","${instructions}","${link}","${due_date_and_time}","${max_point}" ,"${file_name}","${file_id}"  from classes C ,subject S  where C.class_name = "${class_name}" and S.subject_name = "${subject_name}";`,
     (errors, results, fiels) => {
       if (errors) {
         console.log("Error from create_assigment");
@@ -473,17 +550,66 @@ app.post("/student_submitted_files", (req, res) => {
 
   const file = req.files.student_submitted_files;
   let file_path =
-    "Student_Assignment_Upload/" +
+    "../Student_Assignment_Upload/" +
     `${student_assigment_id}` +
     "ss_group" +
     file.name;
   file.mv(file_path);
-  const file_name = file.name;
+  const file_name =`${student_assigment_id}`+"ss_group" +file.name;
+  let file_id = "";
+
+// ------------------------------------------------------------------------------------------------------------------------------
+  const filePath = path.join(path.join(__dirname, '../Student_Assignment_Upload'),file_name);
+  console.log(filePath);
+  
+  async function uploadFile() {
+    try {
+      const response = await drive.files.create({
+        requestBody: {
+          name: file_name,
+          mimeType: 'application/pdf',
+        },
+        media: {
+          mimeType: 'application/pdf',
+          body: fs.createReadStream(filePath),
+        },
+      });
+  
+      console.log(response.data.id);
+     
+ 
+if(response.data.id!=null)
+ 
+     {
+
+       file_id = response.data.id;
+
+       fs.unlink(file_path,(err)=>{
+          if(err)
+          {
+            console.log(err);
+          }
+  
+        });
+
+      }
+
+
+ } catch (error) {
+      console.log(error.message);
+    }
+  }
+  
+  uploadFile();
+  // -------------------------------------------------------------------------------------------------------------------------
+
+
+
   const date = new Date();
   const submit_date_and_time = date.toString().substring(0, 24);
 
   connection.query(
-    `insert into student_submitted_assigment values('${student_assigment_id}', '${assigment_id}', '${student_id}', '${file_path}', '${file_name}', '${submit_date_and_time}');`,
+    `insert into student_submitted_assigment values('${student_assigment_id}', '${assigment_id}', '${student_id}', '${file_name}', '${submit_date_and_time}','${file_id}');`,
     (error, results, fiels) => {
       if (error) {
         console.log(error);
@@ -917,5 +1043,5 @@ app.post("/attendance_report_student",(req,res)=>{
 
 
 server.listen(port_number, function () {
-  console.log("Server running at port 5500");
+  console.log("Server running at port ", port_number);
 });
