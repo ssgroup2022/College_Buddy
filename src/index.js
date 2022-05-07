@@ -2,15 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const mysql = require("mysql");
-// const async = require("hbs/lib/async");
-// hello sir
-
-
-
-
-
 const { google } = require('googleapis');
-
 const fs = require("fs");
 const { NONAME, CONNREFUSED, LOADIPHLPAPI } = require("dns");
 const req = require("express/lib/request");
@@ -24,35 +16,27 @@ const { header } = require("express/lib/request");
 const e = require("express");
 const Connection = require("mysql/lib/Connection");
 const { name } = require("ejs");
-
-
-
-
 var http = require('http');
-const protocol = http||authority.protocol || options.protocol || 'https:';
-
+const protocol = http || authority.protocol || options.protocol || 'https:';
 var server = protocol.createServer(app);
 const io = require('socket.io')(server);
-
-
-
-
 var port_number = process.env.PORT || 3000;
-
 var staticpath = path.join(__dirname, "../public");
 app.use(upload());
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(staticpath));
 
- var connection = mysql.createConnection({
-   host: "localhost",
-    port: '3306',
-   user: "root",
-   password: "Sonu@1234",
-   database: "collegebuddy",
-    insecureAuth : true
- });
+var connection = mysql.createConnection({
+  host: "localhost",
+  port: '3306',
+  user: "root",
+  // password: "Sonu@1234",
+  // database: "collegebuddy",
+  password: "root",
+  database: "ss_group",
+  insecureAuth: true
+});
 
 
 
@@ -232,78 +216,75 @@ app.post("/Create_Assigment", (req, res) => {
   let file_id = "";
   if (req.files != null) {
     const add_file = req.files.uploaded_files;
-    file_path ="../Assigment_Upload/" +`${teacher_assignment_id}` +"ss_group" +add_file.name;
+    file_path = "../Assigment_Upload/" + `${teacher_assignment_id}` + "ss_group" + add_file.name;
     add_file.mv(file_path);
-    file_name = `${teacher_assignment_id}`+"ss_group" +add_file.name;
+    file_name = `${teacher_assignment_id}` + "ss_group" + add_file.name;
 
 
-// ------------------------------------------------------------------------------------------------------------------------------
-  const filePath = path.join(path.join(__dirname, '../Assigment_Upload'),file_name);
-  console.log(filePath);
-  
-  async function uploadFile() {
-    try {
-      const response = await drive.files.create({
-        requestBody: {
-          name: file_name,
-          mimeType: 'application/pdf',
-        },
-        media: {
-          mimeType: 'application/pdf',
-          body: fs.createReadStream(filePath),
-        },
-      });
-  
-      console.log(response.data.id);
+    // ------------------------------------------------------------------------------------------------------------------------------
+    const filePath = path.join(path.join(__dirname, '../Assigment_Upload'), file_name);
+    console.log(filePath);
 
-  if(response.data.id!=null)
-      {
-         file_id = response.data.id;
-        fs.unlink(file_path,(err)=>{
-          if(err)
-          {
-            console.log(err);
-          }
-  
+    async function uploadFile() {
+      try {
+        const response = await drive.files.create({
+          requestBody: {
+            name: file_name,
+            mimeType: 'application/pdf',
+          },
+          media: {
+            mimeType: 'application/pdf',
+            body: fs.createReadStream(filePath),
+          },
         });
 
+        const id = response.data.id;
+        console.log(id + " : 242");
+        return id;
+
+      } catch (error) {
+        console.log(error.message);
       }
-
-
-   
-   } catch (error) {
-      console.log(error.message);
     }
-  }
-  
-  uploadFile();
-  // -------------------------------------------------------------------------------------------------------------------------
+
+    uploadFile().then((id) => {
+      console.log(id);
+      file_id = id;
+      fs.unlink(file_path, (err) => {
+        if (err)
+          console.log(err + " : 257");
+      });
+      fill_assignment_data();
+    });
+    // -------------------------------------------------------------------------------------------------------------------------
 
 
 
 
   }
-
-  connection.query(`insert into assigment(class_id, subject_id, assigment_id, teacher_id, title, instructions, link, due_date_and_time, max_point,file_name,file_id) select C.class_id , S.subject_id ,"${teacher_assignment_id}" , "${teacher_id}" ,"${title}","${instructions}","${link}","${due_date_and_time}","${max_point}" ,"${file_name}","${file_id}"  from classes C ,subject S  where C.class_name = "${class_name}" and S.subject_name = "${subject_name}";`,
-    (errors, results, fiels) => {
-      if (errors) {
-        console.log("Error from create_assigment");
-        console.log(errors);
-      } else {
-        connection.query(
-          `select title , due_date_and_time , assigment_id  from  assigment where assigment_id="${teacher_assignment_id}";`,
-          (err, ress, fil) => {
-            if (err) console.log("error from select assigment");
-            else {
-              code = code + 1;
-              console.log(ress);
-              res.send(ress);
+  function fill_assignment_data() {
+    connection.query(`insert into assigment(class_id, subject_id, assigment_id, teacher_id, title, instructions, link, due_date_and_time, max_point,file_name,file_id) select C.class_id , S.subject_id ,"${teacher_assignment_id}" , "${teacher_id}" ,"${title}","${instructions}","${link}","${due_date_and_time}","${max_point}" ,"${file_name}","${file_id}"  from classes C ,subject S  where C.class_name = "${class_name}" and S.subject_name = "${subject_name}";`,
+      (errors, results, fiels) => {
+        if (errors) {
+          console.log("Error from create_assigment");
+          console.log(errors);
+        } else {
+          connection.query(
+            `select title , due_date_and_time , assigment_id  from  assigment where assigment_id="${teacher_assignment_id}";`,
+            (err, ress, fil) => {
+              if (err) console.log("error from select assigment");
+              else {
+                code = code + 1;
+                console.log(ress);
+                res.send(ress);
+              }
             }
-          }
-        );
+          );
+        }
       }
-    }
-  );
+    );
+  }
+
 });
 
 app.get("/student_login", (req, res) => {
@@ -555,13 +536,13 @@ app.post("/student_submitted_files", (req, res) => {
     "ss_group" +
     file.name;
   file.mv(file_path);
-  const file_name =`${student_assigment_id}`+"ss_group" +file.name;
+  const file_name = `${student_assigment_id}` + "ss_group" + file.name;
   let file_id = "";
 
-// ------------------------------------------------------------------------------------------------------------------------------
-  const filePath = path.join(path.join(__dirname, '../Student_Assignment_Upload'),file_name);
+  // ------------------------------------------------------------------------------------------------------------------------------
+  const filePath = path.join(path.join(__dirname, '../Student_Assignment_Upload'), file_name);
   console.log(filePath);
-  
+
   async function uploadFile() {
     try {
       const response = await drive.files.create({
@@ -574,59 +555,55 @@ app.post("/student_submitted_files", (req, res) => {
           body: fs.createReadStream(filePath),
         },
       });
-  
-      console.log(response.data.id);
-     
- 
-if(response.data.id!=null)
- 
-     {
 
-       file_id = response.data.id;
+      const id = response.data.id;
+      return id;
 
-       fs.unlink(file_path,(err)=>{
-          if(err)
-          {
-            console.log(err);
-          }
-  
-        });
-
-      }
-
-
- } catch (error) {
+    } catch (error) {
       console.log(error.message);
     }
   }
-  
-  uploadFile();
+
+  uploadFile().then((id) => {
+
+    file_id = id;
+
+    fs.unlink(file_path, (err) => {
+      if (err) {
+        console.log(err);
+      }
+
+    });
+
+    fill_submit_assignment_data();
+  });
   // -------------------------------------------------------------------------------------------------------------------------
 
 
 
   const date = new Date();
   const submit_date_and_time = date.toString().substring(0, 24);
-
-  connection.query(
-    `insert into student_submitted_assigment values('${student_assigment_id}', '${assigment_id}', '${student_id}', '${file_name}', '${submit_date_and_time}','${file_id}');`,
-    (error, results, fiels) => {
-      if (error) {
-        console.log(error);
-      } else {
-        connection.query(
-          `select file_name ,student_submitted_assigment_id from student_submitted_assigment where student_submitted_assigment_id='${student_assigment_id}';`,
-          (err, ress, fil) => {
-            if (err) console.log(err);
-            else {
-              student_assigment_code += 1;
-              res.send(ress);
+  function fill_submit_assignment_data() {
+    connection.query(
+      `insert into student_submitted_assigment values('${student_assigment_id}', '${assigment_id}', '${student_id}', '${file_name}', '${submit_date_and_time}','${file_id}');`,
+      (error, results, fiels) => {
+        if (error) {
+          console.log(error);
+        } else {
+          connection.query(
+            `select file_name ,student_submitted_assigment_id from student_submitted_assigment where student_submitted_assigment_id='${student_assigment_id}';`,
+            (err, ress, fil) => {
+              if (err) console.log(err);
+              else {
+                student_assigment_code += 1;
+                res.send(ress);
+              }
             }
-          }
-        );
+          );
+        }
       }
-    }
-  );
+    );
+  }
 });
 
 app.post("/unsubmit_submitted_file", (req, res) => {
@@ -665,39 +642,39 @@ app.post("/unsubmit_submitted_file", (req, res) => {
   );
 });
 
-app.post("/get_student_email_for_gmeet", (req, res)=>{
+app.post("/get_student_email_for_gmeet", (req, res) => {
   const data = req.body;
   const teacher_id = data.teacher_id;
   const subject_id = data.subject_id;
   const class_name = data.class_name;
 
-  connection.query(`select email_id from student_personal_information S, classes C where C.class_name = "${class_name}" and C.class_id = S.class_id;`, (error, results, fiels)=>{
-    if(error){
+  connection.query(`select email_id from student_personal_information S, classes C where C.class_name = "${class_name}" and C.class_id = S.class_id;`, (error, results, fiels) => {
+    if (error) {
       console.log("error from get_student_email_for_gmeet 1");
     }
-    else{
-      connection.query(`select teacher_Email from teacher_personal_information where teacher_id = "${teacher_id}";`, (err, re, fiel)=>{
-        if(err){
+    else {
+      connection.query(`select teacher_Email from teacher_personal_information where teacher_id = "${teacher_id}";`, (err, re, fiel) => {
+        if (err) {
           console.log("error from get_student_email_for_gmeet 2");
         }
-        else{
-        
+        else {
+
           // results[1].teacher_email=re[0].teacher_email;
-          
-          connection.query(`select subject_name from subject where subject_id = "${subject_id}";`, (e, r, f)=>{
-            if(e){
+
+          connection.query(`select subject_name from subject where subject_id = "${subject_id}";`, (e, r, f) => {
+            if (e) {
               console.log("error from get_student_email_for_gmeet 3");
             }
-            else{
-              
-            
-               console.log(results)
-               console.log(re);
-               console.log(r);
+            else {
+
+
+              console.log(results)
+              console.log(re);
+              console.log(r);
               results.push(re[0]);
               results.push(r[0]);
               console.log(results);
-          
+
               res.send(results);
             }
           });
@@ -706,7 +683,7 @@ app.post("/get_student_email_for_gmeet", (req, res)=>{
     }
   });
 });
-app.post("/set_google_meet_link",(req,res)=>{
+app.post("/set_google_meet_link", (req, res) => {
   const data = req.body;
   const slot_number = data.slot_number;
   const day_number = data.day_number;
@@ -717,35 +694,33 @@ app.post("/set_google_meet_link",(req,res)=>{
   console.log(google_meet_link);
   let date_time = new Date();
   let date = date_time.toISOString().slice(0, 10);
-  
 
-  connection.query(`UPDATE time_table SET google_meet_link ="${google_meet_link}" , update_link_date="${date}" WHERE teacher_id="${teacher_id}" and slot_number="${slot_number}" and day_number="${day_number}";`,(error,results,fiel)=>{
 
-    if(error)
-    console.log(error);
+  connection.query(`UPDATE time_table SET google_meet_link ="${google_meet_link}" , update_link_date="${date}" WHERE teacher_id="${teacher_id}" and slot_number="${slot_number}" and day_number="${day_number}";`, (error, results, fiel) => {
 
-    else
-    {
+    if (error)
+      console.log(error);
+
+    else {
       res.send("Done")
     }
   });
 
 });
 
-app.post("/get_gmeet_updateted",(req,res)=>{
+app.post("/get_gmeet_updateted", (req, res) => {
 
   const data = req.body;
   const slot_number = data.slot_number;
   const day_number = data.day_number;
   const teacher_id = data.teacher_id;
 
-  connection.query(`select update_link_date , google_meet_link from time_table where teacher_id ="${teacher_id}" and slot_number="${slot_number}" and day_number="${day_number}";`,(error,results,fiels)=>{
+  connection.query(`select update_link_date , google_meet_link from time_table where teacher_id ="${teacher_id}" and slot_number="${slot_number}" and day_number="${day_number}";`, (error, results, fiels) => {
 
-    if(error)
-    console.log(error);
+    if (error)
+      console.log(error);
 
-    else
-    {
+    else {
       console.log(results);
       res.send(results);
     }
@@ -753,18 +728,16 @@ app.post("/get_gmeet_updateted",(req,res)=>{
 
 });
 
-app.post("/insert_message",(req,res)=>{
+app.post("/insert_message", (req, res) => {
 
   const data = req.body;
   const room_name = data.room_name;
-  connection.query(`select * from chat where room_name="${room_name}";`,(error,results,fiels)=>{
-    if(error)
-    {
+  connection.query(`select * from chat where room_name="${room_name}";`, (error, results, fiels) => {
+    if (error) {
       console.log(error);
     }
 
-    else
-    {
+    else {
       console.log(results);
       res.send(results);
     }
@@ -778,105 +751,98 @@ app.post("/insert_message",(req,res)=>{
 
 io.on('connection', (socket) => {
   console.log('Connected...')
-  
-  socket.on("join_room",(room_name)=>{
+
+  socket.on("join_room", (room_name) => {
     socket.join(`${room_name}`);
     console.log(`join room ${room_name}`);
   });
 
-  socket.on("Join_class",(link,room_name,SN,DN)=>{
+  socket.on("Join_class", (link, room_name, SN, DN) => {
     console.log("hello");
     console.log(`hello from ${link} ${room_name} ${SN} ${DN}`);
-    io.sockets.in(`${room_name}`).emit("add_class",`${link}`,SN,DN);
+    io.sockets.in(`${room_name}`).emit("add_class", `${link}`, SN, DN);
   });
 
-  socket.on("join_chat_room",(room_name)=>{
-  
+  socket.on("join_chat_room", (room_name) => {
+
     var room = io.sockets.adapter.rooms;
     for (const [key, value] of room.entries()) {
       // console.log(key, value);
-    
-      if(key.substring(0,4)=="chat")
-      {
+
+      if (key.substring(0, 4) == "chat") {
         socket.leave(key);
       }
     }
-    
+
     socket.join(`${room_name}`);
-   
-   
+
+
   });
 
 
-  socket.on("join_all_room_of_this_class",(class_name)=>{
-    connection.query(`select distinct(subject_name) from subject s , time_table t  ,classes c where c.class_name = "${class_name}" and c.class_id=t.class_id and t.subject_id = s.subject_id;`,(error,results,fiels)=>{
+  socket.on("join_all_room_of_this_class", (class_name) => {
+    connection.query(`select distinct(subject_name) from subject s , time_table t  ,classes c where c.class_name = "${class_name}" and c.class_id=t.class_id and t.subject_id = s.subject_id;`, (error, results, fiels) => {
 
-      if(error)
-      {
+      if (error) {
         console.log(error);
       }
-      else
-      {
+      else {
         for (let index = 0; index < results.length; index++) {
           const subject_name = results[index].subject_name;
           const room_name = class_name.concat(`(${subject_name})`);
-          socket.join(`${room_name}`);  
-          
+          socket.join(`${room_name}`);
+
         }
       }
     });
-    
+
   });
 
 
 
-  socket.on("join_all_room_of_this_teacher",(teacher_id)=>{
-    connection.query(`select distinct(s.subject_name) , c.class_name from subject s , time_table t  ,classes c where t.teacher_id = "${teacher_id}" and t.class_id= c.class_id and t.subject_id = s.subject_id;`,(error,results,fiels)=>{
+  socket.on("join_all_room_of_this_teacher", (teacher_id) => {
+    connection.query(`select distinct(s.subject_name) , c.class_name from subject s , time_table t  ,classes c where t.teacher_id = "${teacher_id}" and t.class_id= c.class_id and t.subject_id = s.subject_id;`, (error, results, fiels) => {
 
-      if(error)
-      {
+      if (error) {
         console.log(error);
       }
-      else
-      {
+      else {
         for (let index = 0; index < results.length; index++) {
           const subject_name = results[index].subject_name;
           const class_name = results[index].class_name;
           const room_name = class_name.concat(`(${subject_name})`);
-          socket.join(`${room_name}`);  
-          
+          socket.join(`${room_name}`);
+
         }
       }
     });
-    
-  });  
 
-  
-  socket.on("message_handel",(message,date,name,room_name)=>{
+  });
+
+
+  socket.on("message_handel", (message, date, name, room_name) => {
 
     var room_for_alert = room_name.substring(4);
     console.log(room_for_alert);
-   
-    socket.broadcast.in(`${room_name}`).emit("in_message",`${message}`,`${date}`,`${name}`);
-    socket.broadcast.in(`${room_for_alert}`).emit("alert_to_message" , `${room_for_alert}`);
-    connection.query(`insert into chat VALUES("${room_name}","${name}","${date}","${message}");`,(error,results,fiels)=>{
-      if(error)
-      {
+
+    socket.broadcast.in(`${room_name}`).emit("in_message", `${message}`, `${date}`, `${name}`);
+    socket.broadcast.in(`${room_for_alert}`).emit("alert_to_message", `${room_for_alert}`);
+    connection.query(`insert into chat VALUES("${room_name}","${name}","${date}","${message}");`, (error, results, fiels) => {
+      if (error) {
         console.log(error);
       }
-      else
-      {
+      else {
         console.log(results);
       }
     });
-    
+
   });
 
-  
 
-  socket.on("attendance",(student_id,attendance,class_name)=>{
-    
-    socket.in(`${student_id}`).emit("comming_attendance",`${attendance}`,`${class_name}`);
+
+  socket.on("attendance", (student_id, attendance, class_name) => {
+
+    socket.in(`${student_id}`).emit("comming_attendance", `${attendance}`, `${class_name}`);
   });
 
 
@@ -884,7 +850,7 @@ io.on('connection', (socket) => {
 
 
 
-app.post("/check_link_for_class",(req,res)=>{
+app.post("/check_link_for_class", (req, res) => {
 
   const data = req.body;
   const class_name = data.class_name;
@@ -894,15 +860,13 @@ app.post("/check_link_for_class",(req,res)=>{
   console.log(slot_number);
   console.log(day_number);
   console.log(class_name);
-  connection.query(`select google_meet_link ,update_link_date from time_table T , classes C where C.class_name = "${class_name}" and C.class_id=T.class_id and T.slot_number = ${slot_number} and T.day_number=${day_number};`,(error,results,fiels)=>{
+  connection.query(`select google_meet_link ,update_link_date from time_table T , classes C where C.class_name = "${class_name}" and C.class_id=T.class_id and T.slot_number = ${slot_number} and T.day_number=${day_number};`, (error, results, fiels) => {
 
-    if(error)
-    {
+    if (error) {
       console.log("error from check_link_for_classes");
     }
 
-    else
-    {
+    else {
       console.log(results);
       res.send(results);
 
@@ -916,94 +880,89 @@ app.post("/check_link_for_class",(req,res)=>{
 
 
 
-app.post("/ClassStudent_attendance",(req,res)=>{
+app.post("/ClassStudent_attendance", (req, res) => {
   console.log("hello");
-  const data=JSON.parse(req.body.attendance);
+  const data = JSON.parse(req.body.attendance);
   const class_name = data[0].class_name;
-  connection.query(`select class_id from classes where class_name ="${class_name}";`,(error,results,fiels)=>{
+  connection.query(`select class_id from classes where class_name ="${class_name}";`, (error, results, fiels) => {
 
-    if(error)
-    console.log(error);
-    else
-    {
+    if (error)
+      console.log(error);
+    else {
       const class_id = results[0].class_id;
-   
+
       let string = "INSERT INTO attendance values"
       for (let index = 0; index < data.length; index++) {
-        if(index!=data.length-1)
-        {
-          string=string + `(${data[index].enrollnment_number},"${class_id}","${data[index].subject_id}","${data[index].attendance}","${data[index].date}"),`;
+        if (index != data.length - 1) {
+          string = string + `(${data[index].enrollnment_number},"${class_id}","${data[index].subject_id}","${data[index].attendance}","${data[index].date}"),`;
 
         }
-        else
-        {
-          string=string + `(${data[index].enrollnment_number},"${class_id}","${data[index].subject_id}","${data[index].attendance}","${data[index].date}");`
+        else {
+          string = string + `(${data[index].enrollnment_number},"${class_id}","${data[index].subject_id}","${data[index].attendance}","${data[index].date}");`
 
         }
       }
-      
-      connection.query(string ,(erro,result,fiel)=>{
-        if(erro)
-        console.log(erro);
 
-        else
-        {
+      connection.query(string, (erro, result, fiel) => {
+        if (erro)
+          console.log(erro);
+
+        else {
           res.send();
         }
       });
     }
   });
-  
+
 });
 
 
-app.post("/attendance_report",(req,res)=>{
+app.post("/attendance_report", (req, res) => {
   console.log(req.body);
-  const data =req.body;
+  const data = req.body;
   const class_name = data.class_name;
   const subject_name = data.subject_name;
-  connection.query(`SELECT enrollnment_number en , count(*) total , name , (select count(*) from attendance  where enrollnment_number = en and attendance="P" )total_pressent  FROM attendance a , classes c , subject s ,student_personal_information t  where  c.class_name ="${class_name}" and s.subject_name = "${subject_name}" and c.class_id=a.claas_id and s.subject_id=a.subject_id and  a.enrollnment_number=t.student_id group by(enrollnment_number);`,(error,results,fiels)=>{
+  connection.query(`SELECT enrollnment_number en , count(*) total , name , (select count(*) from attendance  where enrollnment_number = en and attendance="P" )total_pressent  FROM attendance a , classes c , subject s ,student_personal_information t  where  c.class_name ="${class_name}" and s.subject_name = "${subject_name}" and c.class_id=a.claas_id and s.subject_id=a.subject_id and  a.enrollnment_number=t.student_id group by(enrollnment_number);`, (error, results, fiels) => {
 
-    if(error)
-    console.log(error);
-    else{
+    if (error)
+      console.log(error);
+    else {
       res.send(results);
     }
-  
+
   });
-  
+
 });
 
 
 
-app.post("/attendance_report_student",(req,res)=>{
+app.post("/attendance_report_student", (req, res) => {
   console.log(req.body);
-  const data =req.body;
+  const data = req.body;
   const class_name = data.class_name;
   const subject_id = data.subject_id;
   const student_id = data.student_id;
-  connection.query(`SELECT date , attendance FROM attendance a , classes c where c.class_name="${class_name}" and enrollnment_number="${student_id}" and a.claas_id=c.class_id and subject_id="${subject_id}";`,(error,results,fiels)=>{
+  connection.query(`SELECT date , attendance FROM attendance a , classes c where c.class_name="${class_name}" and enrollnment_number="${student_id}" and a.claas_id=c.class_id and subject_id="${subject_id}";`, (error, results, fiels) => {
 
-    if(error)
-    console.log(error);
-    else{
-      connection.query(`SELECT distinct(enrollnment_number)en , ((select count(attendance) from attendance where attendance ="P" and enrollnment_number=en) )total_p from attendance a, classes c where class_name = "${class_name}" and subject_id="${subject_id}" and a.claas_id=c.class_id;`,(err,resu,fiel)=>{
-        if(err)
-        console.log(err);
-        else
-        {
+    if (error)
+      console.log(error);
+    else {
+      connection.query(`SELECT distinct(enrollnment_number)en , ((select count(attendance) from attendance where attendance ="P" and enrollnment_number=en) )total_p from attendance a, classes c where class_name = "${class_name}" and subject_id="${subject_id}" and a.claas_id=c.class_id;`, (err, resu, fiel) => {
+        if (err)
+          console.log(err);
+        else {
           const array = [];
-          
+
           array.push(results);
           array.push(resu);
           res.send(array);
         }
       })
-     
+
     }
-  
+
   });
-  
+
 });
 
 
